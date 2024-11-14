@@ -10,15 +10,21 @@ class Animal:
         self.alive = True
 
     def apply_health_reduction(self, percentage):
-        reduction = self.health * (percentage/100)
-        self.health -= reduction
-        return self.health
+        if self.alive:
+            reduction = self.health * (percentage/100)
+            self.health -= reduction
+            return self.health
 
     def feed(self, percentage):
-        self.health *= (1 + percentage/100)
-        # health should be capped at 100
-        self.health = min(100, self.health)
-        return self.health
+        if self.alive:
+            self.health *= (1 + percentage/100)
+            # health should be capped at 100
+            self.health = min(100, self.health)
+            return self.health
 
     def check_health(self):
-        pass
+        if self.health < self.death_threshold:
+            self.alive = False
+            return f"{self.name} has died."
+        elif self.name == "Elephant" and self.health < self.health_threshold:
+            return f"{self.name} cannot walk due to poor health. Give them some food quickly."
