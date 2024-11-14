@@ -60,9 +60,11 @@ def test_animal_dies_when_health_is_under_death_threshold():
 
 
 def test_elephant_is_incapacitated_when_health_is_under_health_threshold():
-    pass
 
-    # elephant = Animal("Elephant", 70, 70)
-    # elephant.apply_health_reduction(40)
-    # result = elephant.check_health()
-    # assert result == "Elephant cannot walk due to poor health. Give them some food quickly."
+    elephant = Animal("Elephant", 70, 70)
+    elephant.apply_health_reduction(40)
+    # elephant is at 40% and will be below threshold
+    result = elephant.below_threshold
+    assert result
+    print_statement = elephant.check_health
+    # assert print_statement == "An Elephant cannot walk due to poor health. Give the animals some food quickly."
