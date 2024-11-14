@@ -30,7 +30,6 @@ venv\Scripts\activate
 
 ```
 pip install pytest
-
 ```
 
 ### Running the Project
@@ -47,7 +46,6 @@ python main.py
 
 ```
 pytest
-
 ```
 
 ### Troubleshooting
