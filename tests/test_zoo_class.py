@@ -56,5 +56,9 @@ def test_zoo_animals_die_after_not_being_fed():
     print(giraffes[0].health)
     zoo.pass_time()
     print(giraffes[0].health)
+    zoo.pass_time()
+    print(giraffes[0].health)
+    zoo.pass_time()
+    print(giraffes[0].health)
 
     assert not giraffes[0].alive

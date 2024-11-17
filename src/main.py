@@ -23,24 +23,31 @@ class Animal:
     def feed(self, percentage):
         if self.alive:
             self.health *= (1 + percentage/100)
-            # health should be capped at 100
+            # health is capped at 100
             self.health = min(100, self.health)
             self.check_health()
             return self.health
 
-    # the return are for the tests
+    # the returns are for the tests - they don't affect the program as it is for the UI
     def check_health(self):
-        if self.name == "Elephant" and self.below_threshold:
+        # When an elephant can't walk but is fed - back above 70% health
+        if self.name == "Elephant" and self.health > self.health_threshold:
+            self.below_threshold = False
+
+        # The elephant couldn't walk and was not fed next hour - dies
+        elif self.below_threshold and self.health < self.health_threshold:
             self.alive = False
             print(f"{self.name} has died.")
             return f"{self.name} has died."
 
+        # Elephant is below 70% and has one hour to live
         elif self.name == "Elephant" and self.health < self.health_threshold:
             self.below_threshold = True
             print(
                 f"An {self.name} cannot walk due to poor health. Give the animals some food quickly.")
             return f"An {self.name} cannot walk due to poor health. Give the animals some food quickly."
 
+        # Animal health is below death threshold
         elif self.health < self.death_threshold:
             self.alive = False
             print(f"{self.name} has died.")
@@ -62,7 +69,14 @@ class Zoo:
         for animal_type, animal_list in self.animals.items():
             status_lines.append(f"{animal_type}s:")
             for i, animal in enumerate(animal_list, 1):
-                status = "Alive" if animal.alive else "Dead"
+                # status = "Alive" if animal.alive else "Dead"
+                if animal.below_threshold and animal.alive:
+                    status = "Unable to walk"
+                elif animal.alive:
+                    status = "Alive"
+                else:
+                    status = "Dead"
+
                 status_lines.append(
                     f"  {animal_type} {i}: Health = {animal.health:.2f}%, Status = {status}")
             status_lines.append("")  # blank line between animal groups
